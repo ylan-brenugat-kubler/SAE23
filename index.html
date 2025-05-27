@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instant Weather V2</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen flex flex-col items-center justify-center p-4 transition-colors duration-300">
+    <header class="w-full max-w-3xl mb-6">
+        <h1 class="text-3xl font-bold text-center">Instant Weather V2</h1>
+        <button id="theme-toggle" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500" aria-label="Toggle dark mode">
+            Toggle Dark Mode
+        </button>
+    </header>
+    <main class="w-full max-w-3xl bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
+        <form id="weather-form" class="space-y-4">
+            <div>
+                <label for="city" class="block text-sm font-medium">Ville</label>
+                <input type="text" id="city" name="city" required class="mt-1 w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" aria-required="true" placeholder="Entrez le nom de la ville">
+            </div>
+            <div>
+                <label for="days" class="block text-sm font-medium">Nombre de jours</label>
+                <select id="days" name="days" class="mt-1 w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" aria-label="Sélectionner le nombre de jours pour les prévisions">
+                    <option value="1">1 jour</option>
+                    <option value="2">2 jours</option>
+                    <option value="3">3 jours</option>
+                    <option value="4">4 jours</option>
+                    <option value="5">5 jours</option>
+                    <option value="6">6 jours</option>
+                    <option value="7">7 jours</option>
+                </select>
+            </div>
+            <fieldset class="space-y-2">
+                <legend class="text-sm font-medium">Informations supplémentaires</legend>
+                <div class="flex items-center">
+                    <input type="checkbox" id="latitude" name="info" value="latitude" class="h-4 w-4 text-blue-500 focus:ring-blue-500 border-gray-300 rounded">
+                    <label for="latitude" class="ml-2 text-sm">Latitude</label>
+                </div>
+                <div class="flex items-center">
+                    <input type="checkbox" id="longitude" name="info" value="longitude" class="h-4 w-4 text-blue-500 focus:ring-blue-500 border-gray-300 rounded">
+                    <label for="longitude" class="ml-2 text-sm">Longitude</label>
+                </div>
+                <div class="flex items-center">
+                    <input type="checkbox" id="rain" name="info" value="rain" class="h-4 w-4 text-blue-500 focus:ring-blue-500 border-gray-300 rounded">
+                    <label for="rain" class="ml-2 text-sm">Cumul de pluie</label>
+                </div>
+                <div class="flex items-center">
+                    <input type="checkbox" id="wind-speed" name="info" value="wind-speed" class="h-4 w-4 text-blue-500 focus:ring-blue-500 border-gray-300 rounded">
+                    <label for="wind-speed" class="ml-2 text-sm">Vitesse du vent</label>
+                </div>
+                <div class="flex items-center">
+                    <input type="checkbox" id="wind-direction" name="info" value="wind-direction" class="h-4 w-4 text-blue-500 focus:ring-blue-500 border-gray-300 rounded">
+                    <label for="wind-direction" class="ml-2 text-sm">Direction du vent</label>
+                </div>
+            </fieldset>
+            <button type="submit" class="w-full px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">Afficher la météo</button>
+        </form>
+        <div id="weather-results" class="mt-6 grid gap-4" role="region" aria-live="polite"></div>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
