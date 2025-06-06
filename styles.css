@@ -13,68 +13,68 @@
     --border-color: #e5e7eb;
 }
 
-/* Styles de base */
+/* Réinitialisation des styles de base */
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+    box-sizing: border-box; /* Assure que padding et border sont inclus dans la taille des éléments */
 }
 
 body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    line-height: 1.6;
-    transition: all 0.5s ease;
-    background-color: var(--bg-secondary);
-    color: var(--text-primary);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; /* Police moderne avec fallbacks */
+    line-height: 1.6; /* Améliore la lisibilité */
+    transition: all 0.5s ease; /* Transition fluide pour les changements de style */
+    background-color: var(--bg-secondary); /* Couleur de fond douce */
+    color: var(--text-primary); /* Couleur de texte principale */
 }
 
-/* Styles pour les suggestions */
+/* Styles pour les suggestions d'autocomplétion */
 #suggestions {
-    z-index: 1000;
+    z-index: 1000; /* Assure que les suggestions apparaissent au-dessus des autres éléments */
 }
 
 .suggestion-item {
     padding: 0.75rem 1rem;
     cursor: pointer;
     transition: all 0.2s ease;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05); /* Séparateur subtil */
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
 .suggestion-item:last-child {
-    border-bottom: none;
+    border-bottom: none; /* Supprime la bordure du dernier élément */
 }
 
 .suggestion-item:hover {
-    background: rgba(59, 130, 246, 0.1);
-    transform: translateX(4px);
+    background: rgba(59, 130, 246, 0.1); /* Fond léger au survol */
+    transform: translateX(4px); /* Déplacement subtil pour une interaction dynamique */
 }
 
 .suggestion-item.focused {
-    background: rgba(59, 130, 246, 0.15) !important;
+    background: rgba(59, 130, 246, 0.15) !important; /* Style pour l'élément sélectionné au clavier */
     transform: translateX(4px);
 }
 
 .suggestion-main {
-    flex: 1;
+    flex: 1; /* Prend l'espace disponible */
 }
 
 .suggestion-city {
-    font-weight: 600;
+    font-weight: 600; /* Texte en gras pour la ville */
     font-size: 0.9rem;
     color: var(--text-primary);
 }
 
 .suggestion-details {
     font-size: 0.75rem;
-    color: var(--text-secondary);
+    color: var(--text-secondary); /* Couleur secondaire pour les détails */
     margin-top: 0.25rem;
 }
 
 .suggestion-postal {
-    background: linear-gradient(135deg, #3b82f6, #ffffff);
+    background: linear-gradient(135deg, #3b82f6, #ffffff); /* Dégradé pour le code postal */
     color: rgb(255, 255, 255);
     padding: 0.25rem 0.5rem;
     border-radius: 0.5rem;
@@ -83,9 +83,9 @@ body {
     margin-left: 0.5rem;
 }
 
-/* Style pour le texte mis en évidence */
+/* Style pour le texte mis en évidence dans les suggestions */
 mark {
-    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    background: linear-gradient(135deg, #fbbf24, #f59e0b); /* Dégradé jaune pour le surlignage */
     color: white;
     padding: 0.125rem 0.25rem;
     border-radius: 0.25rem;
@@ -104,12 +104,12 @@ mark {
     opacity: 1;
 }
 
-/* Effet glassmorphism */
+/* Effet glassmorphism pour un aspect moderne */
 .glass {
-    background: var(--glass-bg);
-    backdrop-filter: blur(20px);
+    background: var(--glass-bg); /* Fond semi-transparent */
+    backdrop-filter: blur(20px); /* Flou pour l'effet verre */
     border: 1px solid var(--glass-border);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37); /* Ombre pour la profondeur */
 }
 
 /* Animations personnalisées */
@@ -140,34 +140,34 @@ mark {
         transform: scale(1);
     }
     50% {
-        transform: scale(1.05);
+        transform: scale(1.05); /* Effet de pulsation pour les boutons */
     }
 }
 
 /* Styles pour les cartes météo */
 .weather-card {
     background: linear-gradient(145deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.4));
-    backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px); /* Effet verre */
     border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 1.5rem;
     padding: 1.5rem;
     box-shadow: 
         0 8px 32px 0 rgba(31, 38, 135, 0.37),
-        inset 0 1px 0 rgba(255, 255, 255, 0.5);
+        inset 0 1px 0 rgba(255, 255, 255, 0.5); /* Ombres multiples pour la profondeur */
     transition: all 0.3s ease;
-    animation: fadeInUp 0.6s ease forwards;
+    animation: fadeInUp 0.6s ease forwards; /* Animation d'entrée */
     position: relative;
     overflow: hidden;
 }
 
 .weather-card:hover {
-    transform: translateY(-5px) scale(1.02);
+    transform: translateY(-5px) scale(1.02); /* Effet de survol léger */
     box-shadow: 
         0 20px 40px 0 rgba(31, 38, 135, 0.5),
         inset 0 1px 0 rgba(255, 255, 255, 0.6);
 }
 
-/* Effet de brillance pour les cartes */
+/* Effet de brillance sur les cartes météo */
 .weather-card::before {
     content: '';
     position: absolute;
@@ -182,7 +182,7 @@ mark {
 }
 
 .weather-card:hover::before {
-    animation: shine 0.8s ease-in-out;
+    animation: shine 0.8s ease-in-out; /* Animation de brillance au survol */
 }
 
 @keyframes shine {
@@ -199,42 +199,42 @@ mark {
     }
 }
 
-/* Icônes météo améliorées */
+/* Amélioration des icônes météo */
 .weather-icon {
     width: 80px;
     height: 80px;
-    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2)); /* Ombre portée pour les icônes */
     transition: all 0.3s ease;
 }
 
 .weather-card:hover .weather-icon {
-    transform: scale(1.1) rotate(5deg);
+    transform: scale(1.1) rotate(5deg); /* Animation au survol des icônes */
 }
 
 /* Styles pour la carte Leaflet */
 #map {
     border-radius: 1rem;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); /* Ombre pour la carte */
     transition: all 0.3s ease;
 }
 
 #map:hover {
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3); /* Ombre renforcée au survol */
 }
 
 /* Personnalisation des contrôles de la carte */
 .leaflet-control-container .leaflet-control {
     background: rgba(255, 255, 255, 0.9) !important;
-    backdrop-filter: blur(10px) !important;
+    backdrop-filter: blur(10px) !important; /* Effet verre pour les contrôles */
     border-radius: 0.5rem !important;
     border: 1px solid rgba(255, 255, 255, 0.3) !important;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
 }
 
-/* Popup personnalisé pour la carte */
+/* Personnalisation des popups de la carte */
 .leaflet-popup-content-wrapper {
     background: rgba(255, 255, 255, 0.95) !important;
-    backdrop-filter: blur(10px) !important;
+    backdrop-filter: blur(10px) !important; /* Effet verre pour les popups */
     border-radius: 1rem !important;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15) !important;
 }
@@ -250,39 +250,39 @@ mark {
 }
 
 .temp-hot {
-    background: linear-gradient(135deg, #ff6b6b, #ee5a5a);
+    background: linear-gradient(135deg, #ff6b6b, #ee5a5a); /* Rouge pour températures chaudes */
     color: white;
 }
 
 .temp-warm {
-    background: linear-gradient(135deg, #ffa726, #ff9800);
+    background: linear-gradient(135deg, #ffa726, #ff9800); /* Orange pour températures tièdes */
     color: white;
 }
 
 .temp-cool {
-    background: linear-gradient(135deg, #42a5f5, #2196f3);
+    background: linear-gradient(135deg, #42a5f5, #2196f3); /* Bleu clair pour températures fraîches */
     color: white;
 }
 
 .temp-cold {
-    background: linear-gradient(135deg, #7986cb, #3f51b5);
+    background: linear-gradient(135deg, #7986cb, #3f51b5); /* Bleu foncé pour températures froides */
     color: white;
 }
 
-/* Styles pour les éléments de formulaire */
+/* Styles pour les champs de formulaire */
 input[type="text"], 
 input[type="email"], 
 select, 
 textarea {
-    transition: all 0.3s ease;
+    transition: all 0.3s ease; /* Transition fluide pour les interactions */
 }
 
 input[type="text"]:focus, 
 input[type="email"]:focus, 
 select:focus, 
 textarea:focus {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px); /* Léger soulèvement au focus */
+    box-shadow: 0 8px 25px rgba(255, 255, 255, 0.3); /* Ombre renforcée */
 }
 
 /* Boutons avec effets */
@@ -293,17 +293,17 @@ button {
 }
 
 button:active {
-    transform: scale(0.98);
+    transform: scale(0.98); /* Effet de clic */
 }
 
-/* Loading spinner personnalisé */
+/* Spinner de chargement personnalisé */
 .spinner {
     width: 3rem;
     height: 3rem;
     border: 4px solid rgba(59, 130, 246, 0.3);
     border-top: 4px solid #3b82f6;
     border-radius: 50%;
-    animation: spin 1s linear infinite;
+    animation: spin 1s linear infinite; /* Animation de rotation continue */
 }
 
 @keyframes spin {
@@ -311,7 +311,7 @@ button:active {
     100% { transform: rotate(360deg); }
 }
 
-/* Responsive design amélioré */
+/* Responsive design */
 @media (max-width: 768px) {
     .weather-card {
         padding: 1rem;
@@ -319,26 +319,26 @@ button:active {
     }
     
     #map {
-        height: 250px;
+        height: 250px; /* Hauteur réduite pour les petits écrans */
     }
     
     .weather-icon {
         width: 60px;
-        height: 60px;
+        height: 60px; /* Taille réduite des icônes */
     }
 }
 
 @media (max-width: 640px) {
     .grid-cols-2 {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr; /* Une seule colonne sur petits écrans */
     }
     
-    .md\\:grid-cols-5 {
-        grid-template-columns: repeat(2, 1fr);
+    .md\:grid-cols-5 {
+        grid-template-columns: repeat(2, 1fr); /* Grille à deux colonnes */
     }
 }
 
-/* Animations d'entrée pour les éléments */
+/* Animations d'entrée */
 .animate-fade-in {
     animation: fadeInUp 0.6s ease forwards;
 }
@@ -352,7 +352,7 @@ button:active {
     display: inline-flex;
     align-items: center;
     padding: 0.25rem 0.75rem;
-    background: rgba(59, 130, 246, 0.1);
+    background: rgba(59, 130, 246, 0.1); /* Fond bleu clair */
     border: 1px solid rgba(59, 130, 246, 0.3);
     border-radius: 1rem;
     font-size: 0.75rem;
@@ -362,11 +362,11 @@ button:active {
 }
 
 .info-badge:hover {
-    background: rgba(59, 130, 246, 0.2);
+    background: rgba(59, 130, 246, 0.2); /* Fond plus foncé au survol */
     transform: translateY(-1px);
 }
 
-/* Amélioration de l'accessibilité */
+/* Amélioration de l'accessibilité pour les utilisateurs préférant moins d'animations */
 @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
         animation-duration: 0.01ms !important;
@@ -375,14 +375,14 @@ button:active {
     }
 }
 
-/* Focus visible amélioré */
+/* Amélioration de l'indicateur de focus */
 *:focus-visible {
-    outline: 2px solid #3b82f6;
+    outline: 2px solid #3b82f6; /* Contour bleu pour le focus */
     outline-offset: 2px;
     border-radius: 0.25rem;
 }
 
-/* Scrollbar personnalisée */
+/* Personnalisation de la barre de défilement */
 ::-webkit-scrollbar {
     width: 8px;
 }
@@ -393,10 +393,10 @@ button:active {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: linear-gradient(135deg, #667eea, #764ba2);
+    background: linear-gradient(135deg, #667eea, #764ba2); /* Dégradé pour la barre */
     border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(135deg, #5a67d8, #6b46c1);
+    background: linear-gradient(135deg, #5a67d8, #6b46c1); /* Dégradé plus foncé au survol */
 }

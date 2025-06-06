@@ -1,37 +1,38 @@
 // Variables globales
-let map;
-let currentMarker;
-let weatherData = [];
-let searchTimeout;
-let suggestionsContainer;
+let map; // Carte Leaflet
+let currentMarker; // Marqueur actuel sur la carte
+let weatherData = []; // Données météo récupérées
+let searchTimeout; // Temporisateur pour la recherche en temps réel
+let suggestionsContainer; // Conteneur pour les suggestions d'autocomplétion
 
 // Configuration de la carte
 const mapConfig = {
-    defaultView: [46.603354, 1.888334], // Centre de la France
-    defaultZoom: 6,
-    maxZoom: 18,
-    tileLayer: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-    attribution: '© OpenStreetMap contributors'
+    defaultView: [46.603354, 1.888334], // Coordonnées centrées sur la France
+    defaultZoom: 6, // Niveau de zoom initial
+    maxZoom: 18, // Zoom maximum
+    tileLayer: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', // Source des tuiles OpenStreetMap
+    attribution: '© Contributeurs OpenStreetMap' // Crédits pour la carte
 };
 
 // Initialisation de la carte
 function initMap() {
     map = L.map('map').setView(mapConfig.defaultView, mapConfig.defaultZoom);
+    // Crée une instance de carte Leaflet centrée sur la France
     
     L.tileLayer(mapConfig.tileLayer, {
         attribution: mapConfig.attribution,
         maxZoom: mapConfig.maxZoom
-    }).addTo(map);
+    }).addTo(map); // Ajoute les tuiles OpenStreetMap à la carte
 }
 
 // Ajout d'un marqueur sur la carte
 function addMarkerToMap(lat, lng, cityName, popupContent) {
-    // Supprimer le marqueur précédent s'il existe
+    // Supprime le marqueur précédent s'il existe
     if (currentMarker) {
         map.removeLayer(currentMarker);
     }
     
-    // Créer un marqueur personnalisé
+    // Crée un marqueur personnalisé avec une icône Font Awesome
     const customIcon = L.divIcon({
         className: 'custom-marker',
         html: '<div class="marker-pin"><i class="fas fa-map-marker-alt text-red-500 text-2xl"></i></div>',
@@ -49,16 +50,16 @@ function addMarkerToMap(lat, lng, cityName, popupContent) {
                 ${popupContent}
             </div>
         `)
-        .openPopup();
+        .openPopup(); // Affiche le popup avec les informations de la ville
     
-    // Centrer la carte sur le marqueur avec animation
+    // Centre la carte sur le marqueur avec une animation fluide
     map.flyTo([lat, lng], 12, {
         animate: true,
         duration: 1.5
     });
 }
 
-// Fonction pour afficher/masquer le spinner de chargement
+// Affiche ou masque le spinner de chargement
 function toggleLoading(show) {
     const spinner = document.getElementById('loading-spinner');
     if (show) {
@@ -68,7 +69,7 @@ function toggleLoading(show) {
     }
 }
 
-// Fonction pour obtenir l'icône météo appropriée
+// Retourne l'icône météo appropriée en fonction du code météo
 function getWeatherIcon(weatherCode) {
     const icons = {
         0: '☀️', // Ensoleillé
@@ -89,10 +90,10 @@ function getWeatherIcon(weatherCode) {
         211: '⛈️', // Orage modéré
         212: '⛈️', // Orage fort
     };
-    return icons[weatherCode] || '🌤️';
+    return icons[weatherCode] || '🌤️'; // Icône par défaut si code inconnu
 }
 
-// Fonction pour obtenir la description météo
+// Retourne la description météo en fonction du code
 function getWeatherDescription(weatherCode) {
     const descriptions = {
         0: 'Ensoleillé',
@@ -116,7 +117,7 @@ function getWeatherDescription(weatherCode) {
     return descriptions[weatherCode] || 'Conditions météo inconnues';
 }
 
-// Fonction pour obtenir la classe CSS de température
+// Détermine la classe CSS pour la température
 function getTempClass(temp) {
     if (temp >= 25) return 'temp-hot';
     if (temp >= 15) return 'temp-warm';
@@ -124,7 +125,7 @@ function getTempClass(temp) {
     return 'temp-cold';
 }
 
-// Fonction pour créer une carte météo
+// Crée une carte météo pour un jour donné
 function createWeatherCard(day, cityName, index, info, lat, lng) {
     const date = new Date(day.datetime);
     const formattedDate = date.toLocaleDateString('fr-FR', {
@@ -132,7 +133,7 @@ function createWeatherCard(day, cityName, index, info, lat, lng) {
         year: 'numeric',
         month: 'long',
         day: 'numeric'
-    });
+    }); // Formatage de la date en français
     
     const weather = getWeatherDescription(day.weather);
     const weatherIcon = getWeatherIcon(day.weather);
@@ -141,7 +142,7 @@ function createWeatherCard(day, cityName, index, info, lat, lng) {
     
     const card = document.createElement('div');
     card.className = 'weather-card';
-    card.style.animationDelay = `${index * 0.1}s`;
+    card.style.animationDelay = `${index * 0.1}s`; // Délai pour une animation en cascade
     
     const additionalInfo = [];
     if (info.includes('latitude')) additionalInfo.push(`<span class="info-badge"><i class="fas fa-globe-americas mr-1"></i>Lat: ${lat.toFixed(4)}</span>`);
@@ -203,7 +204,7 @@ function createWeatherCard(day, cityName, index, info, lat, lng) {
         </div>
     `;
     
-    return card;
+    return card; // Retourne la carte météo générée
 }
 
 // Gestionnaire de soumission du formulaire
@@ -219,10 +220,10 @@ document.getElementById('weather-form').addEventListener('submit', async (e) => 
         return;
     }
     
-    toggleLoading(true);
+    toggleLoading(true); // Affiche le spinner
     
     try {
-        // Étape 1: Recherche de la ville
+        // Étape 1: Recherche de la ville via l'API
         const apiToken = '98dccdd29cc6a31bc53e69d7ad0f3589deba60cdb6a473f7bfd0de1ae306b4e0';
         const searchUrl = `https://api.meteo-concept.com/api/location/cities?token=${apiToken}&search=${encodeURIComponent(city)}`;
         
@@ -263,23 +264,23 @@ document.getElementById('weather-form').addEventListener('submit', async (e) => 
         
     } catch (error) {
         console.error('Erreur:', error);
-        showError(error.message);
+        showError(error.message); // Affiche un message d'erreur
     } finally {
-        toggleLoading(false);
+        toggleLoading(false); // Masque le spinner
     }
 });
 
-// Fonction pour afficher les résultats météo
+// Affiche les résultats météo sous forme de cartes
 function displayWeatherResults(forecasts, cityName, info, lat, lng) {
     const resultsDiv = document.getElementById('weather-results');
-    resultsDiv.innerHTML = '';
+    resultsDiv.innerHTML = ''; // Vide les résultats précédents
     
     forecasts.forEach((day, index) => {
         const card = createWeatherCard(day, cityName, index, info, lat, lng);
         resultsDiv.appendChild(card);
     });
     
-    // Animation d'apparition en cascade
+    // Animation d'apparition en cascade pour les cartes
     const cards = resultsDiv.querySelectorAll('.weather-card');
     cards.forEach((card, index) => {
         setTimeout(() => {
@@ -288,7 +289,7 @@ function displayWeatherResults(forecasts, cityName, info, lat, lng) {
     });
 }
 
-// Fonction pour afficher les erreurs
+// Affiche un message d'erreur
 function showError(message) {
     const resultsDiv = document.getElementById('weather-results');
     resultsDiv.innerHTML = `
@@ -304,20 +305,18 @@ function showError(message) {
     `;
 }
 
-// Fonction pour la recherche de villes avec code postal
+// Recherche de villes ou codes postaux via l'API
 async function searchCitiesAndPostalCodes(query) {
     try {
         const apiToken = '98dccdd29cc6a31bc53e69d7ad0f3589deba60cdb6a473f7bfd0de1ae306b4e0';
         let searchUrl;
         
-        // Vérifier si c'est un code postal (5 chiffres)
+        // Vérifie si la requête est un code postal (5 chiffres)
         const isPostalCode = /^\d{5}$/.test(query);
         
         if (isPostalCode) {
-            // Recherche par code postal
             searchUrl = `https://api.meteo-concept.com/api/location/cities?token=${apiToken}&postal=${query}`;
         } else {
-            // Recherche par nom de ville
             searchUrl = `https://api.meteo-concept.com/api/location/cities?token=${apiToken}&search=${encodeURIComponent(query)}`;
         }
         
@@ -325,7 +324,7 @@ async function searchCitiesAndPostalCodes(query) {
         const data = await response.json();
         
         if (data.cities && data.cities.length > 0) {
-            showSuggestions(data.cities.slice(0, 8), query);
+            showSuggestions(data.cities.slice(0, 8), query); // Affiche jusqu'à 8 suggestions
         } else {
             hideSuggestions();
         }
@@ -335,7 +334,7 @@ async function searchCitiesAndPostalCodes(query) {
     }
 }
 
-// Fonction pour afficher les suggestions
+// Affiche les suggestions d'autocomplétion
 function showSuggestions(cities, query) {
     if (!suggestionsContainer) {
         suggestionsContainer = document.getElementById('suggestions');
@@ -347,7 +346,7 @@ function showSuggestions(cities, query) {
         const suggestionItem = document.createElement('div');
         suggestionItem.className = 'suggestion-item';
         
-        // Mettre en évidence le terme recherché
+        // Met en évidence le texte correspondant à la recherche
         const cityName = highlightText(city.name, query);
         const postalCode = city.postal || city.cp || 'N/A';
         const department = city.departement || '';
@@ -363,7 +362,7 @@ function showSuggestions(cities, query) {
             <div class="suggestion-postal">${postalCode}</div>
         `;
         
-        // Gestionnaire de clic
+        // Gère le clic sur une suggestion
         suggestionItem.addEventListener('click', () => {
             document.getElementById('city').value = city.name;
             hideSuggestions();
@@ -372,10 +371,10 @@ function showSuggestions(cities, query) {
         suggestionsContainer.appendChild(suggestionItem);
     });
     
-    suggestionsContainer.classList.remove('hidden');
+    suggestionsContainer.classList.remove('hidden'); // Affiche les suggestions
 }
 
-// Fonction pour masquer les suggestions
+// Masque les suggestions
 function hideSuggestions() {
     if (suggestionsContainer) {
         suggestionsContainer.classList.add('hidden');
@@ -383,7 +382,7 @@ function hideSuggestions() {
     }
 }
 
-// Fonction pour mettre en évidence le texte recherché
+// Met en évidence le texte correspondant à la recherche
 function highlightText(text, query) {
     if (!query || query.length < 2) return text;
     
@@ -391,7 +390,7 @@ function highlightText(text, query) {
     return text.replace(regex, '<mark class="bg-yellow-200 px-1 rounded">$1</mark>');
 }
 
-// Fonction pour gérer la recherche en temps réel
+// Initialise la recherche en temps réel
 function initLiveSearch() {
     const cityInput = document.getElementById('city');
     
@@ -404,13 +403,13 @@ function initLiveSearch() {
             return;
         }
         
-        // Délai pour éviter trop de requêtes
+        // Délai de 300ms pour limiter les requêtes
         searchTimeout = setTimeout(() => {
             searchCitiesAndPostalCodes(query);
         }, 300);
     });
     
-    // Masquer les suggestions quand on clique ailleurs
+    // Masque les suggestions si on clique ailleurs
     document.addEventListener('click', (e) => {
         if (!e.target.closest('#city') && !e.target.closest('#suggestions')) {
             hideSuggestions();
@@ -442,28 +441,22 @@ function initLiveSearch() {
     });
 }
 
-// Gestion du redimensionnement de la carte
+// Gère le redimensionnement de la carte
 function handleMapResize() {
     window.addEventListener('resize', () => {
         if (map) {
             setTimeout(() => {
-                map.invalidateSize();
+                map.invalidateSize(); // Recalcule la taille de la carte
             }, 100);
         }
     });
 }
 
-// Fonction d'initialisation complète
+// Fonction principale d'initialisation
 function initApp() {
-    // Initialisation de la carte
-    initMap();
-    
-    // Initialisation de la recherche en temps réel
-    initLiveSearch();
-    
-    // Gestion du redimensionnement
-    handleMapResize();
-    
+    initMap(); // Initialise la carte
+    initLiveSearch(); // Active la recherche en temps réel
+    handleMapResize(); // Gère le redimensionnement
     // Animation d'entrée pour les éléments
     setTimeout(() => {
         document.querySelectorAll('.animate-fade-in').forEach(el => {
@@ -484,9 +477,9 @@ window.addEventListener('error', (event) => {
     console.error('Erreur globale:', event.error);
 });
 
-// Service Worker pour la mise en cache (optionnel)
+// Support pour Service Worker (optionnel)
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-        console.log('Service Worker support détecté');
+        console.log('Support du Service Worker détecté');
     });
 }
