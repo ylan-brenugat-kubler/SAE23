@@ -1,4 +1,4 @@
-# Instant Weather V3 
+# Instant Weather V2
 
 Une appli météo simple et jolie que j'ai développée pour mon projet SAE23 Elle permet de consulter la météo de n'importe où en France avec une interface moderne.
 
